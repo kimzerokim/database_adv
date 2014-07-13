@@ -66,6 +66,7 @@ var insert = function (obj) {
     }
     convertData(obj, function () {
         rawJsonData.push(obj);
+        fs.writeFileSync('jsonStore.json', JSON.stringify(rawJsonData));
         console.log('insert finished');
     });
 };
@@ -74,3 +75,9 @@ var insert = function (obj) {
 
 //load json data file
 loadStorage();
+
+console.log(select(99999));
+
+insert({"personalNum": 100003, "name": "Alice Patterson", "phoneNum": "4-(881)988-3412"});
+
+console.log(select(100002));
