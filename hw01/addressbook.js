@@ -25,21 +25,15 @@ var dataStorePATH = './jsonStore.json',
 var loadStorage = function () {
     //check hashmap size (init once at first execute)
     if (map.count() <= 0) {
-
-        console.log('start load');
-
+        console.log('\n//////////////\nstart load');
         //read file and convert data to hashmap
-        fs.readFile(dataStorePATH, 'utf8', function (err, data) {
-            if (err) console.log(err);
+        var data = fs.readFileSync(dataStorePATH, 'utf8');
 
-            rawJsonData = JSON.parse(data);
-
-            rawJsonData.forEach(function (obj) {
-                convertData(obj, null);
-            });
-
-            console.log('finish load');
+        rawJsonData = JSON.parse(data);
+        rawJsonData.forEach(function (obj) {
+            convertData(obj, null);
         });
+        console.log('finish load\n//////////////\n');
     }
 };
 
@@ -59,9 +53,8 @@ var convertData = function (obj, callback) {
 };
 
 //select specific value
-var select = function (inputKey) {
-    var key = String(inputKey);
-    console.log(map.get(key));
+var select = function (key) {
+    return map.get(key);
 };
 
 //insert value to storage
@@ -79,4 +72,5 @@ var insert = function (obj) {
 
 //////////////////////////////////////////
 
+//load json data file
 loadStorage();
