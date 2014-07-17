@@ -5,7 +5,8 @@ var fs = require('fs'),
 
 //env setting
 var dataStorePATH = './jsonStore.json',
-    rawJsonData = undefined;
+    rawJsonData = undefined,
+    newDataStorePATH = './newJsonData.json';
 
 //example json data
 //[
@@ -33,6 +34,7 @@ var loadStorage = function () {
         rawJsonData.forEach(function (obj) {
             convertData(obj, null);
         });
+
         console.log('finish load\n//////////////\n');
     }
 };
@@ -71,13 +73,17 @@ var insert = function (obj) {
     });
 };
 
+var insertJsonFile = function () {
+    var data = fs.readFileSync(newDataStorePATH, 'utf8');
+    var rawJsonData = JSON.parse(data);
+    rawJsonData.forEach(function (obj) {
+        insert(obj);
+    });
+};
+
 //////////////////////////////////////////
 
 //load json data file
 loadStorage();
 
-console.log(select(99999));
-
-insert({"personalNum": 100003, "name": "Alice Patterson", "phoneNum": "4-(881)988-3412"});
-
-console.log(select(100002));
+insertJsonFile();
